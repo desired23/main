@@ -1,0 +1,36 @@
+{
+  "name": "web-comics",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "start": "node src/app.js",
+    "startv2": "nodemon --experimental-modules --es-module-specifier-resolution=node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desired23/webcomics.git"
+  },
+  "author": "desired23",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/desired23/webcomics/issues"
+  },
+  "homepage": "https://github.com/desired23/webcomics#readme",
+  "dependencies": {
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^3.0.3",
+    "vite": "^4.5.2",
+    "vite-plugin-node": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.18"
+  }
+}
