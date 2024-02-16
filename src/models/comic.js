@@ -3,6 +3,7 @@ const Comic = (comic) => {
     this.id = comic.id
     this.name = comic.name
     this.auth = comic.auth
+    this.image = comic.image
     this.category = comic.category
     this.chapter = comic.chapter
     this.status = comic.status
@@ -20,14 +21,33 @@ Comic.get_all = (result) => {
 }
 
 Comic.get_byId = (id, result) => {
+    // db.query('SELECT * FROM comic WHERE id = ?', id, function (err, comic) {
+    //     console.log(comic[0]);
+    //     if (err || comic.length === 0) {
+    //         result(null)
+    //     } else {
+    //         result(comic[0]);
+    //     }
+    // })
     db.query('SELECT * FROM comic WHERE id = ?', id, function (err, comic) {
-        console.log(comic[0]);
         if (err || comic.length === 0) {
-            result(null)
+            result(null);
         } else {
-            result(comic[0]);
+            const comicInfo = comic[0];
+
+            // Lấy tất cả các chapter của comic thông qua khóa ngoại comic_id
+            db.query('SELECT * FROM chapter WHERE comic_id = ?', id, function (err, chapters) {
+                if (err) {
+                    result(null);
+                } else {
+                    // Thêm danh sách các chapter vào thông tin của comic
+                    comicInfo.chapters = chapters;
+
+                    result(comicInfo);
+                }
+            });
         }
-    })
+    });
 }
 
 Comic.add = (newComic, result) => {
@@ -42,8 +62,8 @@ Comic.add = (newComic, result) => {
 
 Comic.update = (id, newComic, result) => {
     console.log(newComic);
-    db.query(`UPDATE comic SET name=?, auth=?, category=?, chapter=?, status=?, description=? WHERE id=${id}`,
-        [newComic.name, newComic.auth, newComic.category, newComic.chapter, newComic.status, newComic.description],
+    db.query(`UPDATE comic SET name=?, auth=?, image=?, category=?, chapter=?, status=?, description=? WHERE id=${id}`,
+        [newComic.name, newComic.auth, newComic.image, newComic.category, newComic.chapter, newComic.status, newComic.description],
         function (err, comic) {
             if (err) {
                 result(null)
